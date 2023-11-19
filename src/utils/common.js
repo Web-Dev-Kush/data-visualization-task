@@ -43,7 +43,6 @@ export const calculateMedian = (numArray) => {
   numArray.sort(function (a, b) {
     return a - b;
   });
-  console.log(numArray);
   const length = numArray.length;
   if (length % 2 === 1) {
     return numArray[length / 2 - 0.5];
@@ -54,13 +53,21 @@ export const calculateMedian = (numArray) => {
 
 export const calculateMode = (numArray) => {
   const countsObj = {};
-  numArray.forEach(function (e) {
-    if (countsObj[e] === undefined) {
-      countsObj[e] = 0;
+  let maxCountKey = undefined;
+  let maxCount = 0;
+  numArray.forEach((numValue) => {
+    let count = 1;
+    if (numValue in countsObj) {
+      count += countsObj[numValue];
     }
-    countsObj[e] += 1;
+    countsObj[numValue] = count;
+
+    if (count > maxCount) {
+      maxCount = count;
+      maxCountKey = numValue;
+    }
   });
   console.log('countsObj', countsObj);
-  const valuesArr = Object.values(countsObj);
-  return Math.max(...valuesArr);
+  console.log(`maxCountKey => ${maxCountKey}, maxCount => ${maxCount}`);
+  return maxCountKey;
 };
